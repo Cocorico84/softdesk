@@ -7,14 +7,14 @@ PERMISSION_CHOICES = ()
 class Project(models.Model):
     project_id = models.IntegerField()
     title = models.CharField(max_length=64)
-    description = models.CharField(max_length=128)
-    type = models.CharField(max_length=32)
+    description = models.CharField(max_length=128, blank=True)
+    type = models.CharField(max_length=32, blank=True)
     author_user_id = models.ForeignKey(
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='projects')
 
 
 class Contributor(models.Model):
-    user_id = models.IntegerField()
+    user_id = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='contributors')
     project_id = models.ForeignKey(
         Project, on_delete=models.CASCADE, related_name='contributors')
     permission = models.IntegerField(choices=PERMISSION_CHOICES)
