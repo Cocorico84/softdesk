@@ -2,9 +2,21 @@ from django.db import models
 from django.conf import settings
 
 PERMISSIONS = ()
-PRIORITIES = ('LOW', 'MEDIUM', 'HIGH')
-TAGS = ('BUG', 'IMPROVE', 'TASK')
-STATUS = ('Todo', 'Doing', 'Done')
+PRIORITIES = (
+    ('LOW', 'low'),
+    ('MEDIUM', 'medium'),
+    ('HIGH', 'high'),
+)
+TAGS = (
+    ('BUG', 'bug'),
+    ('IMPROVE', 'improve'),
+    ('TASK', 'task'),
+)
+STATUS = (
+    ('TODO', 'todo'),
+    ('DOING', 'doing'),
+    ('DONE', 'done'),
+    )
 
 
 class Project(models.Model):
