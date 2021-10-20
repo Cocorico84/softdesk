@@ -8,7 +8,14 @@
 
 # Description
 
-SoftDesk
+SoftDesk is an application to monitor and follow a project with its issues.
+
+You can:
+* create an account
+* create a project
+* follow a project
+* create issues
+* add contributors
 
 # Prerequisites
 
