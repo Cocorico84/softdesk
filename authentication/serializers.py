@@ -1,3 +1,6 @@
+from django.db import models
+
+from app.models import Project
 from .models import User
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
@@ -37,3 +40,8 @@ class RegisterSerializer(ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username')

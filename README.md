@@ -15,7 +15,6 @@ You can:
 * create a project
 * follow a project
 * create issues
-* add contributors
 
 # Prerequisites
 

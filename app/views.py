@@ -1,6 +1,6 @@
-from rest_framework.viewsets import ModelViewSet
-from .models import Project, Contributor, Issue, Comment
-from .serializers import ProjectSerializer, CommentSerializer, ContributorSerializer, IssueSerializer
+from rest_framework.viewsets import ModelViewSet, ViewSet
+from .models import Project, Issue, Comment
+from .serializers import ProjectSerializer, CommentSerializer, IssueSerializer
 
 
 class ProjectViewSet(ModelViewSet):
@@ -10,18 +10,17 @@ class ProjectViewSet(ModelViewSet):
 
 
 class CommentViewSet(ModelViewSet):
-    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = []
 
+    def get_queryset(self):
+        return Comment.objects.filter(issue=self.kwargs['issue_pk'])
+
 
 class IssueViewSet(ModelViewSet):
-    queryset = Issue.objects.all()
     serializer_class = IssueSerializer
     permission_classes = []
 
+    def get_queryset(self):
+        return Issue.objects.filter(project=self.kwargs['project_pk'])
 
-class ContributorViewSet(ModelViewSet):
-    queryset = Contributor.objects.all()
-    serializer_class = ContributorSerializer
-    permission_classes = []
