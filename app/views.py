@@ -1,8 +1,9 @@
 from rest_framework.viewsets import ModelViewSet
 from .models import Project, Issue, Comment
 from .serializers import ProjectSerializer, CommentSerializer, IssueSerializer
-from .permissions import IsContributor
+from .permissions import IsContributor, IsAuthorOrReadOnly
 from rest_framework.permissions import IsAuthenticated
+
 
 class ProjectViewSet(ModelViewSet):
     queryset = Project.objects.all()
@@ -12,7 +13,7 @@ class ProjectViewSet(ModelViewSet):
 
 class CommentViewSet(ModelViewSet):
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
 
     def get_queryset(self):
         return Comment.objects.filter(issue=self.kwargs['issue_pk'])
@@ -20,8 +21,7 @@ class CommentViewSet(ModelViewSet):
 
 class IssueViewSet(ModelViewSet):
     serializer_class = IssueSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
 
     def get_queryset(self):
         return Issue.objects.filter(project=self.kwargs['project_pk'])
-
