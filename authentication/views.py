@@ -16,4 +16,4 @@ class UserView(ModelViewSet):
     serializer_class = UserSerializer
 
     def get_queryset(self):
-        return Project.objects.filter(id=self.kwargs['project_pk'])
+        return User.objects.filter(user_projects__id=self.kwargs['project_pk'])
