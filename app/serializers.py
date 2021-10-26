@@ -1,6 +1,7 @@
-from rest_framework.serializers import ModelSerializer
-from .models import Project, Issue, Comment
 from authentication.serializers import UserSerializer
+from rest_framework.serializers import ModelSerializer
+
+from .models import Comment, Issue, Project
 
 
 class ProjectSerializer(ModelSerializer):
@@ -8,28 +9,28 @@ class ProjectSerializer(ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('title', 'users')
+        fields = ('title', 'description', 'type', 'users')
 
     def validate(self, attrs):
-        attrs['author_user_id'] = self.context['request'].user
+        attrs['author_user_id'] = self.context['request'].user.id
         return super().validate(attrs)
 
 
 class IssueSerializer(ModelSerializer):
     class Meta:
         model = Issue
-        fields = ('title', 'tag')
+        fields = ('title', 'description', 'tag', 'priority', 'project', 'status', 'assignee_user',)
 
     def validate(self, attrs):
-        attrs['author_user_id'] = self.context['request'].user
+        attrs['author_user'] = self.context['request'].user
         return super().validate(attrs)
 
 
 class CommentSerializer(ModelSerializer):
     class Meta:
         model = Comment
-        fields = ('id', )
+        fields = ('description', 'issue',)
 
     def validate(self, attrs):
-        attrs['author_user_id'] = self.context['request'].user
+        attrs['author_user_id'] = self.context['request'].user.id
         return super().validate(attrs)

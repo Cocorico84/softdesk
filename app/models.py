@@ -1,5 +1,12 @@
-from django.db import models
 from django.conf import settings
+from django.db import models
+
+TYPES = (
+    ("BACKEND", "back-end"),
+    ("FRONTEND", "front-end"),
+    ("IOS", "iOS"),
+    ("ANDROID", "Android"),
+)
 
 PRIORITIES = (
     ('LOW', 'low'),
@@ -23,7 +30,7 @@ STATUS = (
 class Project(models.Model):
     title = models.CharField(max_length=64)
     description = models.CharField(max_length=128, blank=True)
-    type = models.CharField(max_length=32, blank=True)
+    type = models.CharField(max_length=32, blank=True, choices=TYPES)
     author_user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='projects')
     users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='user_projects')
