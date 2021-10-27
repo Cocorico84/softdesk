@@ -21,7 +21,8 @@ class IssueSerializer(ModelSerializer):
         fields = ('title', 'description', 'tag', 'priority', 'status', 'assignee_user',)
 
     def validate(self, attrs):
-        attrs['project_id'] = self.context.get("request").parser_context.get("kwargs")["project_pk"]
+        # attrs['project_id'] = self.context.get("request").parser_context.get("kwargs")["project_pk"]
+        attrs['project_id'] = self.instance.project.id
         attrs['author_user'] = self.context['request'].user
         return super().validate(attrs)
 
