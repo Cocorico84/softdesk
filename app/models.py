@@ -40,17 +40,17 @@ class Project(models.Model):
 
 
 class Issue(models.Model):
-    title = models.CharField(max_length=64)
+    title = models.CharField(max_length=64, blank=True)
     description = models.CharField(max_length=128, blank=True)
-    tag = models.CharField(max_length=32, choices=TAGS)
-    priority = models.CharField(max_length=32, choices=PRIORITIES)
+    tag = models.CharField(max_length=32, choices=TAGS, blank=True)
+    priority = models.CharField(max_length=32, choices=PRIORITIES, blank=True)
     project = models.ForeignKey(
         Project, on_delete=models.CASCADE, related_name='issues')
-    status = models.CharField(max_length=32, choices=STATUS)
+    status = models.CharField(max_length=32, choices=STATUS, blank=True)
     author_user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='issues')
     assignee_user = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='assigned_issues')
+        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='assigned_issues', blank=True)
     created_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:

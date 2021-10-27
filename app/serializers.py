@@ -15,13 +15,13 @@ class ProjectSerializer(ModelSerializer):
         attrs['author_user_id'] = self.context['request'].user.id
         return super().validate(attrs)
 
-
 class IssueSerializer(ModelSerializer):
     class Meta:
         model = Issue
-        fields = ('title', 'description', 'tag', 'priority', 'project', 'status', 'assignee_user',)
+        fields = ('title', 'description', 'tag', 'priority', 'status', 'assignee_user',)
 
     def validate(self, attrs):
+        attrs['project_id'] = self.context.get("request").parser_context.get("kwargs")["project_pk"]
         attrs['author_user'] = self.context['request'].user
         return super().validate(attrs)
 

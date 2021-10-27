@@ -21,15 +21,21 @@ from rest_framework_nested import routers
 from rest_framework_simplejwt.views import (TokenObtainPairView,
                                             TokenRefreshView)
 
+project_users = UserView.as_view({
+    'get': 'list',
+    'post': 'create',
+    'delete': 'destroy'
+})
+
 router = routers.SimpleRouter()
 router.register('projects', ProjectViewSet, basename='projects')
 
 projects_router = routers.NestedSimpleRouter(router, 'projects', lookup='project')
-projects_router.register('issues', IssueViewSet, basename='project-issues')
-projects_router.register('users', UserView, basename='project-users')
+projects_router.register('issues', IssueViewSet, basename='project_issues')
+projects_router.register('users', UserView, basename='project_users')
 
 issues_router = routers.NestedSimpleRouter(projects_router, 'issues', lookup='issue')
-issues_router.register('comments', CommentViewSet, basename='issue-comments')
+issues_router.register('comments', CommentViewSet, basename='issue_comments')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
