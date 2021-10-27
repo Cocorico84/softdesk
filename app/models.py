@@ -35,6 +35,9 @@ class Project(models.Model):
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='projects')
     users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='user_projects')
 
+    def __str__(self) -> str:
+        return self.title
+
 
 class Issue(models.Model):
     title = models.CharField(max_length=64)
@@ -50,6 +53,9 @@ class Issue(models.Model):
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='assigned_issues')
     created_time = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self) -> str:
+        return self.title
+
 
 class Comment(models.Model):
     description = models.CharField(max_length=128)
@@ -57,3 +63,6 @@ class Comment(models.Model):
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comments')
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.description
