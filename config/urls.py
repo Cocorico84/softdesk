@@ -27,7 +27,6 @@ router.register('projects', ProjectViewSet, basename='projects')
 
 projects_router = routers.NestedSimpleRouter(router, 'projects', lookup='project')
 projects_router.register('issues', IssueViewSet, basename='project_issues')
-# projects_router.register('users', UserViewSet, basename='project_users')
 
 issues_router = routers.NestedSimpleRouter(projects_router, 'issues', lookup='issue')
 issues_router.register('comments', CommentViewSet, basename='issue_comments')
@@ -41,7 +40,6 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/', include(projects_router.urls)),
     path('api/', include(issues_router.urls)),
-    # path('api/projects/<int:project_pk>/users/', UserViewSet.as_view({'get': 'list', 'post':'create', 'delete': 'destroy'}), name='project_user'),
     path('api/projects/<int:project_pk>/users/', UserViewSet.as_view({'get': 'list'}), name='list_users'),
     path('api/projects/<int:project_pk>/users/<int:user_id>', UserViewSet.as_view({'post':'create', 'delete': 'destroy'}), name='create_delete_user')
 ]
