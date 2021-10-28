@@ -15,6 +15,7 @@ class ProjectSerializer(ModelSerializer):
         attrs['author_user_id'] = self.context['request'].user.id
         return super().validate(attrs)
 
+
 class IssueSerializer(ModelSerializer):
     class Meta:
         model = Issue

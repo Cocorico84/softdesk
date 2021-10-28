@@ -21,7 +21,6 @@ from rest_framework_nested import routers
 from rest_framework_simplejwt.views import (TokenObtainPairView,
                                             TokenRefreshView)
 
-
 router = routers.SimpleRouter()
 router.register('projects', ProjectViewSet, basename='projects')
 
@@ -41,5 +40,6 @@ urlpatterns = [
     path('api/', include(projects_router.urls)),
     path('api/', include(issues_router.urls)),
     path('api/projects/<int:project_pk>/users/', UserViewSet.as_view({'get': 'list'}), name='list_users'),
-    path('api/projects/<int:project_pk>/users/<int:user_id>', UserViewSet.as_view({'post':'create', 'delete': 'destroy'}), name='create_delete_user')
+    path('api/projects/<int:project_pk>/users/<int:user_id>',
+         UserViewSet.as_view({'post': 'create', 'delete': 'destroy'}), name='create_delete_user')
 ]

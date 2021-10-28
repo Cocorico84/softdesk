@@ -1,15 +1,16 @@
+from app.models import Project
 from app.permissions import IsAuthorOrReadOnly
+from rest_framework.exceptions import ValidationError
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
-from rest_framework.exceptions import ValidationError
 
 from authentication.serializers import UserSerializer
-from rest_framework.response import Response
 
 from .models import User
 from .serializers import RegisterSerializer
-from app.models import Project
+
 
 class RegisterView(CreateAPIView):
     queryset = User.objects.all()
