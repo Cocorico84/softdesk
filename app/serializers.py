@@ -13,6 +13,7 @@ class ProjectSerializer(ModelSerializer):
 
     def validate(self, attrs):
         attrs['author_user_id'] = self.context['request'].user.id
+        attrs["users"] = [self.context['request'].user.id]
         return super().validate(attrs)
 
 

@@ -13,13 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from app.views import CommentViewSet, IssueViewSet, ProjectViewSet
-from authentication.views import RegisterView, UserViewSet
+from app.views import CommentViewSet, IssueViewSet, ProjectViewSet, UserViewSet
+from authentication.views import RegisterView
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework_nested import routers
-from rest_framework_simplejwt.views import (TokenObtainPairView,
-                                            TokenRefreshView)
+from rest_framework_simplejwt.views import TokenObtainPairView
+
 
 router = routers.SimpleRouter()
 router.register('projects', ProjectViewSet, basename='projects')
@@ -32,9 +32,7 @@ issues_router.register('comments', CommentViewSet, basename='issue_comments')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include('rest_framework.urls')),
-    path('token/', TokenObtainPairView.as_view(), name='obtain_tokens'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='refresh_token'),
+    path('login/', TokenObtainPairView.as_view(), name='obtain_tokens'),
     path('signup/', RegisterView.as_view(), name='signup'),
     path('api/', include(router.urls)),
     path('api/', include(projects_router.urls)),
