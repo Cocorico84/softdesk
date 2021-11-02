@@ -29,7 +29,7 @@ On Linux or Mac
 $ pip install virtualenv
 $ virtualenv venv --python=python3
 $ source venv/bin/activate
-$ pip install -r requirements.txt
+(venv) $ pip install -r requirements.txt
 ```
 
 On Windows
