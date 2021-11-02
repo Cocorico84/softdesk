@@ -25,7 +25,7 @@ Python 3
 To clone the repository, you can download the zip or clone either HTTPS or SSH. And when you are in the repository you can activate your virtual environement.
 
 On Linux or Mac
-```bash
+```shell
 pip install virtualenv
 virtualenv venv --python=python3
 source venv/bin/activate
@@ -33,7 +33,7 @@ pip install -r requirements.txt
 ```
 
 On Windows
-```bash
+```bat
 c:\Python38\python -m venv c:\path\to\myenv
 C:\\{venv}\\Scripts\\activate.bat
 pip install -r requirements.txt
