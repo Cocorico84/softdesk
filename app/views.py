@@ -1,19 +1,19 @@
-from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.viewsets import ModelViewSet
-
-from .models import Comment, Issue, Project
-from .permissions import IsAuthorOfIssueOrReadOnly, IsAuthorOfProjectOrReadOnly, IsAuthorOfCommentOrReadOnly
-from .serializers import CommentSerializer, IssueSerializer, ProjectSerializer
-from app.models import Project
-from app.permissions import IsAuthorOfProjectOrReadOnly
-from rest_framework.exceptions import ValidationError
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.viewsets import ViewSet
 from authentication.models import User
 from authentication.serializers import UserSerializer
+from rest_framework.exceptions import ValidationError
+from rest_framework.generics import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED
+from rest_framework.viewsets import ModelViewSet, ViewSet
+
+from .models import Comment, Issue, Project
+from .permissions import (IsAuthorOfCommentOrReadOnly,
+                          IsAuthorOfIssueOrReadOnly,
+                          IsAuthorOfProjectOrReadOnly)
+from .serializers import CommentSerializer, IssueSerializer, ProjectSerializer
+
+
 class ProjectViewSet(ModelViewSet):
     serializer_class = ProjectSerializer
     permission_classes = [IsAuthenticated, IsAuthorOfProjectOrReadOnly]
