@@ -1,10 +1,11 @@
+from rest_framework import status
 from authentication.models import User
 from authentication.serializers import UserSerializer
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.status import HTTP_201_CREATED
+from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK
 from rest_framework.viewsets import ModelViewSet, ViewSet
 
 from .models import Comment, Issue, Project
@@ -55,7 +56,7 @@ class UserViewSet(ViewSet):
         if queryset == queryset.none():
             raise ValidationError("No user in this project")
         serializer = UserSerializer(queryset, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=HTTP_200_OK)
 
     def create(self, request, project_pk, user_id, *args, **kwargs):
         user = get_object_or_404(User, id=user_id)
@@ -66,7 +67,7 @@ class UserViewSet(ViewSet):
             project.users.add(user.id)
 
         serializer = UserSerializer(user)
-        return Response(serializer.data)
+        return Response(serializer.data, status=HTTP_201_CREATED)
 
     def destroy(self, request, project_pk, user_id, *args, **kwargs):
         project = Project.objects.get(pk=project_pk)
@@ -75,4 +76,4 @@ class UserViewSet(ViewSet):
             raise ValidationError("The user doesn't exist.")
         project.users.remove(user_id)
         serializer = UserSerializer(user)
-        return Response(serializer.data)
+        return Response(serializer.data, status=HTTP_200_OK)
