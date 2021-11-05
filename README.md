@@ -1,5 +1,5 @@
 ![shield](https://img.shields.io/github/last-commit/Cocorico84/softdesk)
-![shield](https://img.shields.io/github/languages/code-size/cocorico84/softdesk)
+![shield](https://img.shields.io/github/languages/code-size/cocorico84/softdesk) <br>
 ![shield](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![shield](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
 ![shield](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
