@@ -1,4 +1,3 @@
-from rest_framework import status
 from authentication.models import User
 from authentication.serializers import UserSerializer
 from rest_framework.exceptions import ValidationError
@@ -59,13 +58,15 @@ class UserViewSet(ViewSet):
         return Response(serializer.data, status=HTTP_200_OK)
 
     def create(self, request, project_pk, user_id, *args, **kwargs):
+        '''
+
+        '''
         user = get_object_or_404(User, id=user_id)
         project = get_object_or_404(Project, pk=project_pk)
         if user in project.users.all():
             raise ValidationError("The user is already in the list.")
         else:
             project.users.add(user.id)
-
         serializer = UserSerializer(user)
         return Response(serializer.data, status=HTTP_201_CREATED)
 

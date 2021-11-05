@@ -7,8 +7,10 @@ from app.models import Project
 class IsAuthorOfProjectOrReadOnly(BasePermission):
 
     def has_permission(self, request, view):
-        project = get_object_or_404(Project, id=view.kwargs['project_pk'])
-        return request.user in project.users.all()
+        if view.kwargs.get('project_pk') is not None:
+            project = get_object_or_404(Project, id=view.kwargs.get('project_pk'))
+            return request.user in project.users.all()
+        return True
 
     def has_object_permission(self, request, view, obj):
         if request.method in SAFE_METHODS:
@@ -19,8 +21,10 @@ class IsAuthorOfProjectOrReadOnly(BasePermission):
 class IsAuthorOfIssueOrReadOnly(BasePermission):
 
     def has_permission(self, request, view):
-        project = get_object_or_404(Project, id=view.kwargs['project_pk'])
-        return request.user in project.users.all()
+        if view.kwargs.get('project_pk') is not None:
+            project = get_object_or_404(Project, id=view.kwargs.get('project_pk'))
+            return request.user in project.users.all()
+        return True
 
     def has_object_permission(self, request, view, obj):
         project_users = obj.project.users.all()
@@ -32,8 +36,10 @@ class IsAuthorOfIssueOrReadOnly(BasePermission):
 class IsAuthorOfCommentOrReadOnly(BasePermission):
 
     def has_permission(self, request, view):
-        project = get_object_or_404(Project, id=view.kwargs['project_pk'])
-        return request.user in project.users.all()
+        if view.kwargs.get('project_pk') is not None:
+            project = get_object_or_404(Project, id=view.kwargs.get('project_pk'))
+            return request.user in project.users.all()
+        return True
 
     def has_object_permission(self, request, view, obj):
         issue_users = obj.issue.project.users.all()

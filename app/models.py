@@ -50,7 +50,7 @@ class Issue(models.Model):
     author_user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='issues')
     assignee_user = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='assigned_issues')
+        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='assigned_issues', null=True)
     created_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
