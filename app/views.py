@@ -60,7 +60,7 @@ class UserViewSet(ViewSet):
 
     def create(self, request, project_pk, user_id, *args, **kwargs):
         user = get_object_or_404(User, id=user_id)
-        project = Project.objects.get(pk=project_pk)
+        project = get_object_or_404(Project, pk=project_pk)
         if user in project.users.all():
             raise ValidationError("The user is already in the list.")
         else:
@@ -70,7 +70,7 @@ class UserViewSet(ViewSet):
         return Response(serializer.data, status=HTTP_201_CREATED)
 
     def destroy(self, request, project_pk, user_id, *args, **kwargs):
-        project = Project.objects.get(pk=project_pk)
+        project = get_object_or_404(Project, pk=project_pk)
         user = User.objects.filter(id=user_id).first()
         if user is None:
             raise ValidationError("The user doesn't exist.")
