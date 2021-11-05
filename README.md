@@ -13,8 +13,8 @@ SoftDesk is an application to monitor and follow a project with its issues.
 You can:
 * create an account
 * create a project
-* follow a project
 * create issues
+* create comments
 
 # Prerequisites
 
@@ -79,7 +79,7 @@ To get a report. It will create a directory named "flake8-report". Then you can 
 flake8 --format=html --htmldir=flake8-report
 ```
 
-To check types of your project.
+To check types of the project.
 ```
 mypy .
 ```
