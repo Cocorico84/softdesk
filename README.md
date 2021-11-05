@@ -79,6 +79,11 @@ To get a report. It will create a directory named "flake8-report". Then you can 
 flake8 --format=html --htmldir=flake8-report
 ```
 
+To check types of your project.
+```
+mypy .
+```
+
 # Contributor
 
 If you have any suggestions to improve the project, you can create an issue.

@@ -40,7 +40,7 @@ class Project(models.Model):
 
 
 class Issue(models.Model):
-    title = models.CharField(max_length=64, blank=True)
+    title = models.CharField(max_length=64)
     description = models.CharField(max_length=128, blank=True)
     tag = models.CharField(max_length=32, choices=TAGS, blank=True)
     priority = models.CharField(max_length=32, choices=PRIORITIES, blank=True)

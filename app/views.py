@@ -50,15 +50,16 @@ class CommentViewSet(ModelViewSet):
 class UserViewSet(ViewSet):
     permission_classes = [IsAuthenticated, IsAuthorOfProjectOrReadOnly]
 
-    def list(self, request, project_pk):
+    def list(self, request, project_pk: int):
         queryset = User.objects.filter(user_projects__id=project_pk)
         if queryset == queryset.none():
             raise ValidationError("No user in this project")
         serializer = UserSerializer(queryset, many=True)
         return Response(serializer.data, status=HTTP_200_OK)
 
-    def create(self, request, project_pk, user_id, *args, **kwargs):
+    def create(self, request, project_pk: int, user_id: int, *args, **kwargs):
         '''
+        The method is a POST but actually it updates a project to add users only.
 
         '''
         user = get_object_or_404(User, id=user_id)
@@ -70,7 +71,10 @@ class UserViewSet(ViewSet):
         serializer = UserSerializer(user)
         return Response(serializer.data, status=HTTP_201_CREATED)
 
-    def destroy(self, request, project_pk, user_id, *args, **kwargs):
+    def destroy(self, request, project_pk: int, user_id: int, *args, **kwargs):
+        '''
+        This method is a DELETE but actually it removes a user from the project only.
+        '''
         project = get_object_or_404(Project, pk=project_pk)
         user = User.objects.filter(id=user_id).first()
         if user is None:

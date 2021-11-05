@@ -1,19 +1,18 @@
 from django.contrib.auth.password_validation import validate_password
-from rest_framework import serializers
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, ValidationError, CharField, EmailField
 from rest_framework.validators import UniqueValidator
 
 from .models import User
 
 
 class RegisterSerializer(ModelSerializer):
-    email = serializers.EmailField(
-            required=True,
-            validators=[UniqueValidator(queryset=User.objects.all())]
-            )
+    email = EmailField(
+        required=True,
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
 
-    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
-    password2 = serializers.CharField(write_only=True, required=True)
+    password = CharField(write_only=True, required=True, validators=[validate_password])
+    password2 = CharField(write_only=True, required=True)
 
     class Meta:
         model = User
@@ -25,7 +24,7 @@ class RegisterSerializer(ModelSerializer):
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({"password": "Password fields didn't match."})
+            raise ValidationError({"password": "Password fields didn't match."})
         return attrs
 
     def create(self, validated_data):
