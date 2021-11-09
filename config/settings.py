@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+from typing import List
 from pathlib import Path
 from datetime import timedelta
 
@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-1z046l4mxil39%++4fmb8=k7ls7wqm0$cn3g^&(e9y3@0zdvqr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS: List[str] = []
 
 
 # Application definition
