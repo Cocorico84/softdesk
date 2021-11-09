@@ -20,7 +20,7 @@ class ProjectViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated, IsAuthorOfProjectOrReadOnly]
 
     def get_queryset(self) -> QuerySet[Project]:
-        return Project.objects.filter(users=self.request.user)
+        return Project.objects.filter(users=self.request.user.pk)
 
 
 class IssueViewSet(ModelViewSet):

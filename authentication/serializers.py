@@ -28,7 +28,7 @@ class RegisterSerializer(ModelSerializer):
             raise ValidationError({"password": "Password fields didn't match."})
         return attrs
 
-    def create(self, validated_data: dict) -> QuerySet:
+    def create(self, validated_data: dict) -> User:
         user = User.objects.create(
             username=validated_data['username'],
             email=validated_data['email'],
