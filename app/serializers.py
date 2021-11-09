@@ -9,11 +9,11 @@ class ProjectSerializer(ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('title', 'description', 'type', 'users')
+        fields = ('title', 'description', 'type', 'users',)
 
     def validate(self, attrs):
         attrs['author_user_id'] = self.context['request'].user.id
-        attrs["users"] = [self.context['request'].user.id]
+        attrs['users'] = [self.context['request'].user.id]
         return super().validate(attrs)
 
 
@@ -23,7 +23,7 @@ class IssueSerializer(ModelSerializer):
         fields = ('title', 'description', 'tag', 'priority', 'status', 'assignee_user',)
 
     def validate(self, attrs):
-        attrs['project_id'] = self.context.get("request").parser_context.get("kwargs")["project_pk"]
+        attrs['project_id'] = self.context.get('request').parser_context.get('kwargs')['project_pk']
         attrs['author_user'] = self.context['request'].user
         return super().validate(attrs)
 
@@ -34,6 +34,6 @@ class CommentSerializer(ModelSerializer):
         fields = ('description',)
 
     def validate(self, attrs):
-        attrs['issue_id'] = self.context.get("request").parser_context.get("kwargs")["issue_pk"]
+        attrs['issue_id'] = self.context.get('request').parser_context.get('kwargs')['issue_pk']
         attrs['author_user_id'] = self.context['request'].user.id
         return super().validate(attrs)

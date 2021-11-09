@@ -1,4 +1,5 @@
 from django.contrib.auth.password_validation import validate_password
+from django.db.models.query import QuerySet
 from rest_framework.serializers import ModelSerializer, ValidationError, CharField, EmailField
 from rest_framework.validators import UniqueValidator
 
@@ -22,12 +23,12 @@ class RegisterSerializer(ModelSerializer):
             'last_name': {'required': True}
         }
 
-    def validate(self, attrs):
+    def validate(self, attrs: dict):
         if attrs['password'] != attrs['password2']:
             raise ValidationError({"password": "Password fields didn't match."})
         return attrs
 
-    def create(self, validated_data):
+    def create(self, validated_data: dict) -> QuerySet:
         user = User.objects.create(
             username=validated_data['username'],
             email=validated_data['email'],

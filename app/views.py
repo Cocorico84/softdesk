@@ -1,3 +1,4 @@
+from django.db.models.query import QuerySet
 from authentication.models import User
 from authentication.serializers import UserSerializer
 from rest_framework.exceptions import ValidationError
@@ -18,7 +19,7 @@ class ProjectViewSet(ModelViewSet):
     serializer_class = ProjectSerializer
     permission_classes = [IsAuthenticated, IsAuthorOfProjectOrReadOnly]
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         return Project.objects.filter(users=self.request.user)
 
 
@@ -26,7 +27,7 @@ class IssueViewSet(ModelViewSet):
     serializer_class = IssueSerializer
     permission_classes = [IsAuthenticated, IsAuthorOfIssueOrReadOnly]
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs) -> Response:
         data = request.data.copy()
         data['assignee_user'] = data.get("assignee_user", request.user.id)
         serializer = self.get_serializer(data=data)
@@ -35,7 +36,7 @@ class IssueViewSet(ModelViewSet):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=HTTP_201_CREATED, headers=headers)
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         return Issue.objects.filter(project=self.kwargs['project_pk'])
 
 
@@ -43,24 +44,26 @@ class CommentViewSet(ModelViewSet):
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticated, IsAuthorOfCommentOrReadOnly]
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         return Comment.objects.filter(issue=self.kwargs['issue_pk'])
 
 
 class UserViewSet(ViewSet):
     permission_classes = [IsAuthenticated, IsAuthorOfProjectOrReadOnly]
 
-    def list(self, request, project_pk: int):
+    def list(self, request, project_pk: int) -> Response:
+        '''
+        This method provides all users in a specific project.
+        '''
         queryset = User.objects.filter(user_projects__id=project_pk)
         if queryset == queryset.none():
             raise ValidationError("No user in this project")
         serializer = UserSerializer(queryset, many=True)
         return Response(serializer.data, status=HTTP_200_OK)
 
-    def create(self, request, project_pk: int, user_id: int, *args, **kwargs):
+    def create(self, request, project_pk: int, user_id: int, *args, **kwargs) -> Response:
         '''
         The method is a POST but actually it updates a project to add users only.
-
         '''
         user = get_object_or_404(User, id=user_id)
         project = get_object_or_404(Project, pk=project_pk)
@@ -71,7 +74,7 @@ class UserViewSet(ViewSet):
         serializer = UserSerializer(user)
         return Response(serializer.data, status=HTTP_201_CREATED)
 
-    def destroy(self, request, project_pk: int, user_id: int, *args, **kwargs):
+    def destroy(self, request, project_pk: int, user_id: int, *args, **kwargs) -> Response:
         '''
         This method is a DELETE but actually it removes a user from the project only.
         '''
