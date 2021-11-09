@@ -19,7 +19,7 @@ class ProjectViewSet(ModelViewSet):
     serializer_class = ProjectSerializer
     permission_classes = [IsAuthenticated, IsAuthorOfProjectOrReadOnly]
 
-    def get_queryset(self) -> QuerySet:
+    def get_queryset(self) -> QuerySet[Project]:
         return Project.objects.filter(users=self.request.user)
 
 
@@ -36,7 +36,7 @@ class IssueViewSet(ModelViewSet):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=HTTP_201_CREATED, headers=headers)
 
-    def get_queryset(self) -> QuerySet:
+    def get_queryset(self) -> QuerySet[Issue]:
         return Issue.objects.filter(project=self.kwargs['project_pk'])
 
 
@@ -44,7 +44,7 @@ class CommentViewSet(ModelViewSet):
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticated, IsAuthorOfCommentOrReadOnly]
 
-    def get_queryset(self) -> QuerySet:
+    def get_queryset(self) -> QuerySet[Comment]:
         return Comment.objects.filter(issue=self.kwargs['issue_pk'])
 
 
