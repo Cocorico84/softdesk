@@ -18,7 +18,8 @@ class DeleteUserView(APIView):
 
     def delete(self, request, user_pk: int, *args, **kwargs) -> Response:
         '''
-        This method DELETE removes a user from the database. But you can only use this method if you are admin or staff.
+        This method DELETE removes a user from the database.
+        But you can only use this method if you are admin or staff.
         '''
         user = get_object_or_404(User, pk=user_pk)
         user.delete()

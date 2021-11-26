@@ -20,7 +20,7 @@ class ProjectSerializer(ModelSerializer):
 class IssueSerializer(ModelSerializer):
     class Meta:
         model = Issue
-        fields = ('title', 'description', 'tag', 'priority', 'status', 'assignee_user',)
+        fields = ('title', 'description', 'tag', 'priority', 'status', 'assignee_user', 'created_time',)
 
     def validate(self, attrs):
         attrs['project_id'] = self.context.get('request').parser_context.get('kwargs')['project_pk']
@@ -31,7 +31,7 @@ class IssueSerializer(ModelSerializer):
 class CommentSerializer(ModelSerializer):
     class Meta:
         model = Comment
-        fields = ('description',)
+        fields = ('description', 'created_time',)
 
     def validate(self, attrs):
         attrs['issue_id'] = self.context.get('request').parser_context.get('kwargs')['issue_pk']
